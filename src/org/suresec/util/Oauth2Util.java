@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -18,12 +22,15 @@ import org.suresec.config.CasConfig;
 
 
 public class  Oauth2Util {
-	public static void main(String[] args) {
-		
-	}
-	 /**
-     * 获取getAccessToken
-     */
+	/**
+	  *  获取getAccessToken
+	 * @param grant_type
+	 * @param client_secret
+	 * @param client_id
+	 * @param redirect_uri
+	 * @param code
+	 * @return
+	 */
     public static String getAccessToken(String grant_type,String client_secret, String client_id,String redirect_uri,String code) {
 		try {
 			CloseableHttpClient client = HttpClients.createDefault();
@@ -40,6 +47,7 @@ public class  Oauth2Util {
 			int status = response.getStatusLine().getStatusCode();
 			System.out.println("status=" + status);
 			String accessToken = readResponse(response);
+			System.out.println("accessToken-----------"+accessToken);
 //			return accessToken;
 			String[] strs = accessToken.split(",");
 			String[] tokens = strs[0].split(":");
@@ -51,7 +59,9 @@ public class  Oauth2Util {
 		return null;
     }
     /**
-     * 获取getProfile
+         *  获取getProfile
+     * @param accessToken
+     * @return
      */
     public static String getProfile(String accessToken) {
 		try {
@@ -71,8 +81,69 @@ public class  Oauth2Util {
 		return null;
     }
     /**
-     * 读取 response body 内容为字符串
-     *
+         *  获取tgt
+     * @param resp 
+     * @param username
+     * @param password
+     * @return
+     */
+    public static String getTGT(HttpServletResponse resp, String username, String password) {
+        try{
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost(CasConfig.GET_TOKEN_URL);
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("password", password));
+            httpPost.setEntity(new UrlEncodedFormEntity(params));
+            HttpResponse response = client.execute(httpPost);
+            Header headerLocation = response.getFirstHeader("Location");
+            String location = headerLocation == null ? null : headerLocation.getValue();
+            System.out.println("Location：" + location);
+
+            System.out.println("set-cookie:"+response.getFirstHeader("Set-Cookie").getValue());
+            //resp.setHeader("Set-Cookie", response.getFirstHeader("Set-Cookie").getValue());
+            resp.addHeader("Set-Cookie", response.getFirstHeader("Set-Cookie").getValue());
+    		
+    		//Cookie cookie = new Cookie(CasConfig.COOKIE_NAME, response.getFirstHeader("Set-Cookie").getValue());
+    		//cookie.setMaxAge(CasConfig.COOKIE_VALID_TIME); // Cookie有效时间
+    		//cookie.setPath("/"); // Cookie有效路径 
+    		//cookie.setHttpOnly(true); //
+            //resp.addCookie(cookie);
+            System.out.println("cookie_name:"+resp.getHeaderNames());
+            if (location != null) {
+                return location.substring(location.lastIndexOf("/") + 1);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+         *  获取ST
+     * @param TGT
+     * @param service
+     * @return
+     */
+    public static String getST(String TGT, String service){
+        try {
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost(CasConfig.GET_TOKEN_URL + "/" + TGT);
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("service", service));
+            httpPost.setEntity(new UrlEncodedFormEntity(params));
+            HttpResponse response = client.execute(httpPost);
+            String st = readResponse(response);
+            return st == null ? null : (st == "" ? null : st);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+         *  读取 response body 内容为字符串
      * @param response
      * @return
      * @throws IOException

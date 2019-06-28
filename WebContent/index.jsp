@@ -99,9 +99,8 @@ function click2() {
             $("#token").val(msg);
 
         },
-        error: function (XMLHttpRequest,textStatus,errorThrown) {
+        error: function (msg) {
             console.info("请求Error");
-            console.info(XMLHttpRequest.status);
         }
     });
 }
@@ -120,37 +119,13 @@ function click1() {
             $("#profile").val(msg);
 
         },
-        error: function (XMLHttpRequest,textStatus,errorThrown) {
+        error: function (msg) {
             console.info("请求Error");
-            console.info(XMLHttpRequest.status);
+            console.info(msg);
         }
     });
 }
 
-function click3() {
-	var code = $("#code").val();
-	$.ajax({
-        method: "GET",
-        url: "https://cas.example.org:8443/cas5.3.5/oauth2.0/accessToken?grant_type=authorization_code&client_id=100001&client_secret=100001abcdeft&redirect_uri=http://127.0.0.1:8080/client1&code="+code,
-        //data: {'service': service},
-        xhrFields: {
-            withCredentials: true
-        },
-        crossDomain:true,
-        dataType: "jsonp",
-        jsonp: "callback",
-        // cache: false,
-        success: function (result) {
-            console.info("请求成功");
-            console.info(result.access_token);
-           
-        },
-        error: function (result) {
-            console.info("请求失败");
-            console.info(result);
-        }
-    });
-}
 
 </script>
 </html>
