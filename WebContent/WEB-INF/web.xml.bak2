@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>client1</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  	<!-- 单点登出 -->	
+	<listener>
+	    <listener-class>com.sure.uias.client.session.SingleSignOutHttpSessionListener</listener-class>  
+	</listener>
+	   
+	<filter>
+	   <filter-name>SureSingleSignOutFilter</filter-name>
+	   <filter-class> com.sure.uias.client.session.SingleSignOutFilter</filter-class>
+		<init-param>
+	      <param-name>sureServerUrlPrefix</param-name>
+	      <param-value>https://cas.example.org:8443/cas5.3.5/</param-value><!--配置统一身份认证的地址-->
+	    </init-param>
+	</filter>  
+	
+	<filter-mapping>  
+	   <filter-name>SureSingleSignOutFilter</filter-name>  
+	   <url-pattern>/*</url-pattern>  
+	</filter-mapping>
+	
+    <!-- 响应编码utf-8 -->
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- SSO -->
+  <!--该过滤器负责用户的认证工作-->
+  <filter>
+    <filter-name>SureFilter</filter-name>
+    <filter-class>com.sure.uias.client.authentication.AuthenticationFilter</filter-class>
+    <init-param>
+      <param-name>sureServerLoginUrl</param-name>
+      <param-value>https://cas.example.org:8443/cas5.3.5/login</param-value><!--配置统一身份认证的登录地址-->
+    </init-param>
+    <init-param>
+      <param-name>serverName</param-name>
+      <param-value>http://client1.com:8091/</param-value><!--配置web应用自身访问地址-->
+    </init-param>
+	<init-param>
+		<param-name>ignorePattern</param-name>  
+       	<param-value>/login*|/img/*|/view/*|/css/*</param-value>  
+	</init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SureFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- 该过滤器配置负责对Ticket的校验工作-->
+  <filter>
+    <filter-name>SureValidationFilter</filter-name>
+    <filter-class>com.sure.uias.client.validation.SureUias30ProxyReceivingTicketValidationFilter</filter-class>
+    <init-param>
+      <param-name>sureServerUrlPrefix</param-name>
+      <param-value>https://cas.example.org:8443/cas5.3.5/</param-value><!--配置统一身份认证的登录地址-->
+    </init-param>
+    <init-param>
+      <param-name>serverName</param-name>
+      <param-value>http://client1.com:8091/</param-value><!--配置web应用自身访问地址-->
+    </init-param>
+    <!-- 配置应用系统进行身份认证的可信证书信息，可选
+    <init-param>
+      <param-name>sslConfigFile</param-name>
+      <param-value>sso.properties</param-value>
+    </init-param>
+    -->
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>SureValidationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+	
+	<!-- 该过滤器配置获取服务端返回的用户信息-->
+	<filter>
+		<filter-name>SureHttpServletRequestWrapperFilter</filter-name>
+		<filter-class>com.sure.uias.client.util.HttpServletRequestWrapperFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SureHttpServletRequestWrapperFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>SureAssertionThreadLocalFilter</filter-name>
+		<filter-class>com.sure.uias.client.util.AssertionThreadLocalFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SureAssertionThreadLocalFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+
+</web-app>

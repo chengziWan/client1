@@ -47,7 +47,7 @@ public class  Oauth2Util {
 			int status = response.getStatusLine().getStatusCode();
 			System.out.println("status=" + status);
 			String accessToken = readResponse(response);
-			System.out.println("accessToken-----------"+accessToken);
+			System.out.println("accessToken---111--------"+accessToken);
 //			return accessToken;
 			String[] strs = accessToken.split(",");
 			String[] tokens = strs[0].split(":");

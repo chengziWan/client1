@@ -5,6 +5,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
 
+<%-- <%@ page import="com.sure.uias.client.authentication.AttributePrincipal" %> --%> 
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -21,7 +23,7 @@
 <p>A sample web application that exercises the CAS protocol features via the Java CAS Client.</p>
 <hr>
 
-<p><b>Authenticated User Id:</b> <a href="https://cas.example.org:8443/cas5.3.5/logout?service=http://127.0.0.1:8080/client1/login.jsp" title="Click here to log out">Click here to log out <%= request.getRemoteUser() %>
+<p><b>Authenticated User Id:</b> <a href="https://cas.example.org:8443/cas5.3.5/logout?service=http://client1.com:8091/client1/login.jsp" title="Click here to log out">Click here to log out <%= request.getRemoteUser() %>
 </a></p>
 
 <%	
@@ -85,8 +87,8 @@ accessToken:<input type="text" id="token"  size="80px" border="0px"/><br><br>
 <script type="text/javascript">
 function click2() {
 	var code = $("#code").val();
-	var datas = {'grant_type':'authorization_code','client_id':'100001','client_secret':'100001abcdeft',
-				 'redirect_uri':'http://127.0.0.1:8080/client1','code':code};
+	var datas = {'grant_type':'authorization_code','client_id':'1004','client_secret':'100001abcdeft',
+				 'redirect_uri':'http://client1.com:8091/client1','code':code};
 	$.ajax({
         type: "GET",
         async: false,

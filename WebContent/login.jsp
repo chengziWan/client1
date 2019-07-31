@@ -20,10 +20,11 @@
 <form action="/">
 <input type="text" id="username" /><br><br>
 <input type="password" id="password" /><br><br><br><br>
-<input type="hidden" id="service" value="http://cas.example.org:8080/client1/index.jsp"/>
+<input type="hidden" id="service" value="http://cas.example.org:8091/client1/index.jsp"/>
 
 <input type="button" id="button2" value="登录--未实现单点登录" onclick="click2()"/><br><br>
 <input type="button" id="button1" value="授权登录" onclick="click1()"/><br><br>
+<input type="button" id="button1" value="授权登录" onclick="click2()"/><br><br>
 
 </form>
 </body>
@@ -61,7 +62,11 @@ function click2() {
 }
 //oauth2接入
 function click1(){
-	window.location.href = "https://cas.example.org:8443/cas5.3.5/oauth2.0/authorize?response_type=code&client_id=100001&redirect_uri=http://127.0.0.1:8080/client1";
+	window.location.href = "https://cas.example.org:8443/cas5.3.5/oauth2.0/authorize?response_type=code&client_id=100001&redirect_uri=http://cas.example.org:8091/client1";
+}
+//oauth2接入
+function click2(){
+	window.location.href = "https://cas.example.org:8443/cas5.3.5/oauth2.0/authorize?response_type=code&client_id=1004&redirect_uri=http://client1.com:8091/client1";
 }
 //未使用
 function click222() {
