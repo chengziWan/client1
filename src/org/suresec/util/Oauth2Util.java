@@ -20,7 +20,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.suresec.config.CasConfig;
 
-
+/**
+ * 
+ * @author wcc
+ * @time 2019-09-18 11:12
+ * @description oauth2协议--获取token、profile
+ */
 public class  Oauth2Util {
 	/**
 	  *  获取getAccessToken
