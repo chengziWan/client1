@@ -1,0 +1,25 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/slf4j-log4j12-1.7.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-core-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/jackson-annotations-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/slf4j-api-1.7.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-beans-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-aop-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-webmvc-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-expression-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-context-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/jackson-core-2.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-context-support-3.2.6.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/sure-uias-client-core-2.3.51.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/jackson-databind-2.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.17.jar!/" />
+      <root url="jar://$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-orm-3.2.6.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
